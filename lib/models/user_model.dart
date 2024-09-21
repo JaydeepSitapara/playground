@@ -12,12 +12,12 @@ class User1 {
   String? birthDate;
   String? image;
   String? bloodGroup;
-  double? height;
-  double? weight;
+  //double? height;
+  //double? weight;
   String? eyeColor;
   Hair? hair;
   String? ip;
-  Address? address;
+  //Address? address;
   String? macAddress;
   String? university;
   Bank? bank;
@@ -42,12 +42,12 @@ class User1 {
       this.birthDate,
       this.image,
       this.bloodGroup,
-      this.height,
-      this.weight,
+      // this.height,
+      // this.weight,
       this.eyeColor,
       this.hair,
       this.ip,
-      this.address,
+      //this.address,
       this.macAddress,
       this.university,
       this.bank,
@@ -72,13 +72,13 @@ class User1 {
     birthDate = json['birthDate'];
     image = json['image'];
     bloodGroup = json['bloodGroup'];
-    height = json['height'];
-    weight = json['weight'];
+    // height = json['height'];
+    // weight = json['weight'];
     eyeColor = json['eyeColor'];
     hair = json['hair'] != null ? Hair.fromJson(json['hair']) : null;
     ip = json['ip'];
-    address =
-        json['address'] != null ? Address.fromJson(json['address']) : null;
+    // address =
+    //     json['address'] != null ? Address.fromJson(json['address']) : null;
     macAddress = json['macAddress'];
     university = json['university'];
     bank = json['bank'] != null ? Bank.fromJson(json['bank']) : null;
@@ -110,16 +110,16 @@ class User1 {
     data['birthDate'] = birthDate;
     data['image'] = image;
     data['bloodGroup'] = bloodGroup;
-    data['height'] = height;
-    data['weight'] = weight;
+    // data['height'] = height;
+    // data['weight'] = weight;
     data['eyeColor'] = eyeColor;
     if (hair != null) {
       data['hair'] = hair!.toJson();
     }
     data['ip'] = ip;
-    if (address != null) {
-      data['address'] = address!.toJson();
-    }
+    // if (address != null) {
+    //   data['address'] = address!.toJson();
+    // }
     data['macAddress'] = macAddress;
     data['university'] = university;
     if (bank != null) {
@@ -158,69 +158,69 @@ class Hair {
   }
 }
 
-class Address {
-  String? address;
-  String? city;
-  String? state;
-  String? stateCode;
-  String? postalCode;
-  Coordinates? coordinates;
-  String? country;
+// class Address {
+//   String? address;
+//   String? city;
+//   String? state;
+//   String? stateCode;
+//   String? postalCode;
+//   Coordinates? coordinates;
+//   String? country;
 
-  Address(
-      {this.address,
-      this.city,
-      this.state,
-      this.stateCode,
-      this.postalCode,
-      this.coordinates,
-      this.country});
+//   Address(
+//       {this.address,
+//       this.city,
+//       this.state,
+//       this.stateCode,
+//       this.postalCode,
+//       this.coordinates,
+//       this.country});
 
-  Address.fromJson(Map<String, dynamic> json) {
-    address = json['address'];
-    city = json['city'];
-    state = json['state'];
-    stateCode = json['stateCode'];
-    postalCode = json['postalCode'];
-    coordinates = json['coordinates'] != null
-        ? Coordinates.fromJson(json['coordinates'])
-        : null;
-    country = json['country'];
-  }
+//   Address.fromJson(Map<String, dynamic> json) {
+//     address = json['address'];
+//     city = json['city'];
+//     state = json['state'];
+//     stateCode = json['stateCode'];
+//     postalCode = json['postalCode'];
+//     // coordinates = json['coordinates'] != null
+//     //     ? Coordinates.fromJson(json['coordinates'])
+//     //     : null;
+//     country = json['country'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['address'] = address;
-    data['city'] = city;
-    data['state'] = state;
-    data['stateCode'] = stateCode;
-    data['postalCode'] = postalCode;
-    if (coordinates != null) {
-      data['coordinates'] = coordinates!.toJson();
-    }
-    data['country'] = country;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['address'] = address;
+//     data['city'] = city;
+//     data['state'] = state;
+//     data['stateCode'] = stateCode;
+//     data['postalCode'] = postalCode;
+//     // if (coordinates != null) {
+//     //   data['coordinates'] = coordinates!.toJson();
+//     // }
+//     data['country'] = country;
+//     return data;
+//   }
+// }
 
-class Coordinates {
-  double? lat;
-  double? lng;
+// class Coordinates {
+//   double? lat;
+//   double? lng;
 
-  Coordinates({this.lat, this.lng});
+//   Coordinates({this.lat, this.lng});
 
-  Coordinates.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lng = json['lng'];
-  }
+//   Coordinates.fromJson(Map<String, dynamic> json) {
+//     lat = json['lat'];
+//     lng = json['lng'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['lat'] = lat;
-    data['lng'] = lng;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['lat'] = lat;
+//     data['lng'] = lng;
+//     return data;
+//   }
+// }
 
 class Bank {
   String? cardExpire;
@@ -259,16 +259,21 @@ class Company {
   String? department;
   String? name;
   String? title;
-  Address? address;
+  //Address? address;
 
-  Company({this.department, this.name, this.title, this.address});
+  Company({
+    this.department,
+    this.name,
+    this.title,
+    //this.address,
+  });
 
   Company.fromJson(Map<String, dynamic> json) {
     department = json['department'];
     name = json['name'];
     title = json['title'];
-    address =
-        json['address'] != null ? Address.fromJson(json['address']) : null;
+    // address =
+    //     json['address'] != null ? Address.fromJson(json['address']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -276,9 +281,9 @@ class Company {
     data['department'] = department;
     data['name'] = name;
     data['title'] = title;
-    if (address != null) {
-      data['address'] = address!.toJson();
-    }
+    // if (address != null) {
+    //   data['address'] = address!.toJson();
+    // }
     return data;
   }
 }

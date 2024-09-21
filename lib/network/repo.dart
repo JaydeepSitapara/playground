@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:playground/models/user_model.dart';
@@ -54,15 +55,18 @@ class Repo {
     List<User1> usersList = [];
 
     try {
-      Response response =
+      final response =
           await dio.get('https://dummyjson.com/users?limit=$limit');
-      List<dynamic> users = response.data;
-      usersList = User1.listFromJson(users);
-      log('Users list length : ${usersList.length}');
+
+      if (response.statusCode == 200) {
+        usersList = User1.listFromJson(response.data['users']);
+        log('users list length: ${usersList.length}');
+        return usersList;
+      }
     } catch (e) {
-      log(e.toString());
+      log('error in repo : ${e.toString()}');
     }
 
-    return usersList;
+    return [];
   }
 }

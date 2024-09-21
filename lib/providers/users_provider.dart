@@ -8,12 +8,21 @@ class UsersProvider extends ChangeNotifier {
 
   Future<List<User1>> getUsersListFromDummy(int limit) async {
     try {
-      users = await Repo().getUsersFromDummy(limit);
+      // Fetch the new set of users from the repository
+      List<User1> newUsers = await Repo().getUsersFromDummy(limit);
 
+      // Append the new users to the existing list
+      users.addAll(newUsers);
+
+
+
+      // Return the updated users list
       return users;
     } catch (e) {
-      log('get users error : ${e.toString()}');
+      log('get users error: ${e.toString()}');
       return [];
     }
   }
 }
+
+
