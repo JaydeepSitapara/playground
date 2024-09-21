@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:playground/models/user_model.dart';
 import 'package:playground/network/model/post_model.dart';
 import 'package:playground/network/model/todos_model.dart';
 import 'package:playground/network/model/user_model.dart';
@@ -47,5 +48,21 @@ class Repo {
     }
 
     return todos;
+  }
+
+  Future<List<User1>> getUsersFromDummy(int limit) async {
+    List<User1> usersList = [];
+
+    try {
+      Response response =
+          await dio.get('https://dummyjson.com/users?limit=$limit');
+      List<dynamic> users = response.data;
+      usersList = User1.listFromJson(users);
+      log('Users list length : ${usersList.length}');
+    } catch (e) {
+      log(e.toString());
+    }
+
+    return usersList;
   }
 }
