@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:playground/models/user_model.dart';
 import 'package:playground/providers/users_provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +16,20 @@ class Users1Screen extends StatefulWidget {
 class _Users1ScreenState extends State<Users1Screen> {
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  ScrollController scrollController = ScrollController();
+
+  Future<List<User1>>? userFuture;
 
   @override
   void dispose() {
     refreshController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
   }
 
   void _onRefresh() async {
@@ -29,16 +39,17 @@ class _Users1ScreenState extends State<Users1Screen> {
     refreshController.refreshCompleted();
   }
 
-  void _onLoading() async {
-    log('loading');
+  void fetchData() {
     // Fetch more users by increasing the limit
     int newLimit = context.read<UsersProvider>().users.length + 10;
 
-    await context.read<UsersProvider>().getUsersListFromDummy(newLimit);
+    userFuture = context.read<UsersProvider>().getUsersListFromDummy(newLimit);
+  }
 
-    if (mounted) {
-      setState(() {});
-    }
+  void _onLoading() async {
+    log('loading');
+
+    fetchData();
 
     // Complete the loading process
     refreshController.loadComplete();
@@ -53,23 +64,21 @@ class _Users1ScreenState extends State<Users1Screen> {
           appBar: AppBar(
             title: const Text('Users'),
           ),
-          body: SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            controller: refreshController,
-            onLoading: _onLoading,
-            onRefresh: _onRefresh,
-            child: FutureBuilder(
+          body: FutureBuilder(
+              future: userFuture,
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data?.length ?? 0,
+                return SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  controller: refreshController,
+                  onLoading: _onLoading,
+                  onRefresh: _onRefresh,
+                  scrollController: scrollController,
+                  child: ListView.builder(
+                    itemCount: usersProvider.users.length,
+                    controller: scrollController,
                     itemBuilder: (context, index) {
-                      final user = snapshot.data?[index];
+                      final user = usersProvider.users[index];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
@@ -79,16 +88,9 @@ class _Users1ScreenState extends State<Users1Screen> {
                         ),
                       );
                     },
-                  );
-                } else {
-                  return const Center(
-                    child: Text('No users found.'),
-                  );
-                }
-              },
-              future: usersProvider.getUsersListFromDummy(limit),
-            ),
-          ),
+                  ),
+                );
+              }),
         );
       },
     );

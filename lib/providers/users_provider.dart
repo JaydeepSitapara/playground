@@ -5,16 +5,15 @@ import 'package:playground/network/repo.dart';
 
 class UsersProvider extends ChangeNotifier {
   List<User1> users = [];
+  Repo repo = Repo();
 
   Future<List<User1>> getUsersListFromDummy(int limit) async {
     try {
       // Fetch the new set of users from the repository
-      List<User1> newUsers = await Repo().getUsersFromDummy(limit);
+      List<User1> newUsers = await repo.getUsersFromDummy(limit);
 
       // Append the new users to the existing list
       users.addAll(newUsers);
-
-
 
       // Return the updated users list
       return users;
@@ -24,5 +23,3 @@ class UsersProvider extends ChangeNotifier {
     }
   }
 }
-
-
