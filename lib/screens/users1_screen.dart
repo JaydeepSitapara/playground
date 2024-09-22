@@ -55,7 +55,6 @@ class _Users1ScreenState extends State<Users1Screen> {
     refreshController.loadComplete();
   }
 
-  int limit = 10;
   @override
   Widget build(BuildContext context) {
     return Consumer<UsersProvider>(

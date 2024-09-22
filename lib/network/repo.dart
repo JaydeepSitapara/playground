@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:playground/models/produuct_model2.dart';
 import 'package:playground/models/user_model.dart';
 import 'package:playground/network/model/post_model.dart';
 import 'package:playground/network/model/todos_model.dart';
@@ -62,6 +63,26 @@ class Repo {
         usersList = User1.listFromJson(response.data['users']);
         log('users list length: ${usersList.length}');
         return usersList;
+      }
+    } catch (e) {
+      log('error in repo : ${e.toString()}');
+    }
+
+    return [];
+  }
+
+  Future<List<Product>> getProductList(int offset) async {
+    List<Product> productList = [];
+    try {
+      String url =
+          "https://api.escuelajs.co/api/v1/products?offset=$offset&limit=10";
+      log('Url : ${url}');
+      final response = await dio.get(url);
+      
+      if (response.statusCode == 200) {
+        productList = Product.listFromJson(response.data);
+        log('product list length: ${productList.length}');
+        return productList;
       }
     } catch (e) {
       log('error in repo : ${e.toString()}');

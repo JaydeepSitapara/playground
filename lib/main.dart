@@ -3,8 +3,7 @@ import 'package:playground/providers/cart_provider.dart';
 import 'package:playground/providers/items_provider.dart';
 import 'package:playground/providers/products_provider.dart';
 import 'package:playground/providers/users_provider.dart';
-import 'package:playground/screens/first_screen.dart';
-import 'package:playground/screens/users1_screen.dart';
+import 'package:playground/screens/products_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home:  Users1Screen(),
+      home:  ProductsScreen(),
     );
   }
 }

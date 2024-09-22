@@ -31,6 +31,10 @@ class Product {
         : null;
   }
 
+  static List<Product> listFromJson(List<dynamic> list) {
+    return list.map((e) => Product.fromJson(e)).toList();
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
