@@ -8,6 +8,7 @@ import 'package:playground/network/repo.dart';
 
 class ProductsProvider extends ChangeNotifier {
   final dio = Dio();
+  final repo = Repo();
 
   //List<Products> products = [];
 
@@ -45,26 +46,22 @@ class ProductsProvider extends ChangeNotifier {
     log('removed to favorite $index');
   }
 
+  int maxOffset = 30;
   int offSet = 0;
-  void incrementOffset() {
-    offSet += 10;
-  }
 
   List<Product> productList = [];
 
-  Future<List<Product>> getProductList() async {
+  void getProductList() async {
     try {
-      List<Product> newProducts = await Repo().getProductList(offSet);
+      offSet = productList.length;
+      List<Product> newProducts = await repo.getProductList(offSet);
 
       productList.addAll(newProducts);
       notifyListeners();
 
       log('length of product in provider: ${productList.length}');
-
-      return productList;
     } catch (e) {
       log('error in get Products: ${e.toString()}');
     }
-    return [];
   }
 }
