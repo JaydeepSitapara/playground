@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:playground/backgroud_test/background_services/background_service_provider.dart';
+import 'package:playground/backgroud_test/ui/home_screen_backgroud.dart';
 import 'package:playground/providers/cart_provider.dart';
 import 'package:playground/providers/items_provider.dart';
 import 'package:playground/providers/products_provider.dart';
 import 'package:playground/providers/users_provider.dart';
-import 'package:playground/screens/products_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home:  ProductsScreen(),
+      home: HomeScreenBackgroud(),
     );
   }
 }
