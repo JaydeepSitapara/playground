@@ -1,3 +1,4 @@
+import 'package:carp_background_location/carp_background_location.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:playground/backgroud_test/background_services/background_service_provider.dart';
@@ -10,28 +11,17 @@ class HomeScreenBackgroud extends StatefulWidget {
 }
 
 class _HomeScreenBackgroudState extends State<HomeScreenBackgroud> {
+  final LocationManager locationManager = LocationManager();
   @override
   void initState() {
     super.initState();
+    initializeService();
     askPermissions();
-    intialize();
-  }
-
-  void intialize() async {
-    await initializeService();
   }
 
   void askPermissions() async {
-    await Permission.notification.isDenied.then((value) {
-      if (value) {
-        Permission.notification.request();
-      }
-    });
-    await Permission.location.isDenied.then((value) {
-      if (value) {
-        Permission.location.request();
-      }
-    });
+   // Permission.notification.request();
+    Permission.location.request();
   }
 
   @override
@@ -44,14 +34,14 @@ class _HomeScreenBackgroudState extends State<HomeScreenBackgroud> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-            onPressed: () {
-              startBackgroundService();
-            },
+            onPressed: () async {
+              startBackgroundService();            },
             child: const Text('START'),
           ),
           ElevatedButton(
             onPressed: () {
               stopBackgroundService();
+              LocationManager().stop();
             },
             child: const Text('STOP'),
           ),

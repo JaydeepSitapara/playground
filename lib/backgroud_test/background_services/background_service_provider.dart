@@ -43,8 +43,8 @@ Future<void> initializeService() async {
       onStart: onStart,
 
       // auto start service
-      autoStart: true,
-      isForegroundMode: true,
+      autoStart: false,
+      isForegroundMode: false,
 
       notificationChannelId:
           'my_foreground', // this must match with notification channel you created above.
@@ -70,22 +70,28 @@ Future<void> onStart(ServiceInstance service) async {
   // Only available for flutter 3.0.0 and later
   DartPluginRegistrant.ensureInitialized();
 
+
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   final LocationManager locationManager = LocationManager();
   // bring to foreground
-  Timer.periodic(const Duration(seconds: 20), (timer) async {
+  Timer.periodic(const Duration(seconds: 10), (timer) async {
     if (service is AndroidServiceInstance) {
-      if (await service.isForegroundService()) {
+
+
         try {
           LocationDto location = await locationManager.getCurrentLocation();
-          await addlatLong(location);
+          //log('Current location1 : ${location.latitude} - ${location.longitude}');
+          await addLatLong(location);
         } catch (e) {
           log('Error in background service : ${e.toString()}');
         }
 
         log('BACKGROUND SERVICE RUNNING');
+        // LocationDto location = await locationManager.getCurrentLocation();
+        // log('Current location2'
+        //     ' : ${location.latitude} - ${location.longitude}');
 
         flutterLocalNotificationsPlugin.show(
           888,
@@ -100,12 +106,12 @@ Future<void> onStart(ServiceInstance service) async {
             ),
           ),
         );
-      }
+
     }
   });
 }
 
-Future<void> addlatLong(LocationDto location) async {
+Future<void> addLatLong(LocationDto location) async {
   log('Current lat-long : ${location.latitude} - ${location.longitude}');
   final Dio dio = Dio();
   String url = "https://api.restful-api.dev/objects";
